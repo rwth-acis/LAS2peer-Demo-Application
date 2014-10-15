@@ -1,29 +1,36 @@
 package i5.las2peer.services.albumService;
 
 import i5.las2peer.api.Service;
+import i5.las2peer.execution.L2pServiceException;
+import i5.las2peer.p2p.AgentNotKnownException;
+import i5.las2peer.p2p.TimeoutException;
+import i5.las2peer.restMapper.HttpResponse;
 import i5.las2peer.restMapper.RESTMapper;
-import i5.las2peer.restMapper.annotations.GET;
-import i5.las2peer.restMapper.annotations.POST;
-import i5.las2peer.restMapper.annotations.Path;
-import i5.las2peer.restMapper.annotations.PathParam;
-import i5.las2peer.restMapper.annotations.Version;
-import i5.las2peer.restMapper.tools.ValidationResult;
-import i5.las2peer.restMapper.tools.XMLCheck;
+import i5.las2peer.restMapper.annotations.*;
+import i5.las2peer.security.AgentException;
+import i5.las2peer.security.L2pSecurityException;
+import i5.las2peer.security.Mediator;
 import i5.las2peer.security.UserAgent;
+import net.minidev.json.JSONObject;
+import net.minidev.json.JSONArray;
+import net.minidev.json.JSONStyle;
 
-import java.io.IOException;
+import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 
  * LAS2peer Album Service
  *
  */
-@Path("example")
+@Path("LAS2peerFosdemDemo/images")
 @Version("0.1")
 public class AlbumService extends Service {
 
 
-
+	Pattern htmlFileListPattern = Pattern.compile(">(\\w|\\s)+\\.\\w+");
 	/**
 	 * This method is needed for every RESTful application in LAS2peer.
 	 * 
@@ -41,64 +48,93 @@ public class AlbumService extends Service {
         return result;
     }
 
-	/**
-	 * Method for debugging purposes.
-	 * Here the concept of restMapping validation is shown.
-	 * It is important to check, if all annotations are correct and consistent.
-	 * Otherwise the service will not be accessible by the WebConnector.
-	 * Best to do it in the unit tests.
-	 * To avoid being overlooked/ignored the method is implemented here and not in the test section.
-	 * @return  true, if mapping correct
-	 */
-    public boolean debugMapping()
+	@GET
+	@Path("")
+	@Produces("application/json")
+	public HttpResponse getImageList(@QueryParam(name="filter", defaultValue = "") String filter)
 	{
-		String XML_LOCATION = "./restMapping.xml";
-		String xml= getRESTMapping();
 
+		HttpResponse response=null;
+		JSONArray json = new JSONArray();
+
+		Boolean filterContent = filter.length()>0;
+		String result= null;
 		try{
-			RESTMapper.writeFile(XML_LOCATION,xml);
-		}catch (IOException e){
+			result = ((HttpResponse) this.invokeServiceMethod("i5.las2peer.services.fileService.DownloadService","getFile0")).getResult();
+			//filter html response for file names
+			Matcher matcher = htmlFileListPattern.matcher(result);
+			while(matcher.find())
+			{
+				String imageId=matcher.group().substring(1);
+				if(filterContent)
+				{
+					if(imageId.toLowerCase().contains(filter))
+					{
+						json.add(imageId);
+					}
+				}
+				else
+				{
+					json.add(imageId);
+				}
+			}
+			response=new HttpResponse(json.toString(),200);
+		}catch (L2pServiceException e){
+			e.printStackTrace();
+		}catch (AgentNotKnownException e){
+			e.printStackTrace();
+		}catch (L2pSecurityException e){
+			e.printStackTrace();
+		}catch (IllegalAccessException e){
+			e.printStackTrace();
+		}catch (InvocationTargetException e){
+			e.printStackTrace();
+		}catch (InterruptedException e){
+			e.printStackTrace();
+		}catch (TimeoutException e){
 			e.printStackTrace();
 		}
 
-		XMLCheck validator= new XMLCheck();
-		ValidationResult result = validator.validate(xml);
 
-		if(result.isValid())
-			return true;
-		return false;
+		if(response==null)
+			response=new HttpResponse("Error retrieving the image list",500);
+
+		return response;
 	}
-    
-    /**
-     * 
-     * Simple function to validate a user login.
-     * Basically it only serves as a "calling point" and does not really validate a user
-     * (since this is done previously by LAS2peer itself, the user does not reach this method
-     * if he or she is not authenticated).
-     * 
-     */
-    @GET
-    @Path("validate")
-    public String validateLogin()
-    {
-    	String returnString = "";
-    	returnString += "You are " + ((UserAgent) getActiveAgent()).getLoginName() + " and your login is valid!";
-    	return returnString;
-    }
-    
-    /**
-     * 
-     * Another example method.
-     * 
-     * @param myInput
-     * 
-     */
-    @POST
-    @Path("myMethodPath/{input}")
-    public String exampleMethod( @PathParam("input") String myInput)
-    {
-    	String returnString = "";
-    	returnString += "You have entered " + myInput + "!";
-    	return returnString;
-    }
+
+	@GET
+	@Path("{imageId}")
+	@Produces("text/plain")
+	public HttpResponse getImage(@PathParam("imageId") String imageId)
+	{
+		HttpResponse response=null;
+		String result;
+
+		try{
+			result = ((HttpResponse) this.invokeServiceMethod("i5.las2peer.services.fileService.DownloadService","getFile1",imageId)).getResult();
+
+			response=new HttpResponse(result,200);
+		}catch (L2pServiceException e){
+			e.printStackTrace();
+		}catch (AgentNotKnownException e){
+			e.printStackTrace();
+		}catch (L2pSecurityException e){
+			e.printStackTrace();
+		}catch (IllegalAccessException e){
+			e.printStackTrace();
+		}catch (InvocationTargetException e){
+			e.printStackTrace();
+		}catch (InterruptedException e){
+			e.printStackTrace();
+		}catch (TimeoutException e){
+			e.printStackTrace();
+		}
+		if(response==null)
+			response=new HttpResponse("Error retrieving the image",500);
+
+		return response;
+	}
+
+
+
 }

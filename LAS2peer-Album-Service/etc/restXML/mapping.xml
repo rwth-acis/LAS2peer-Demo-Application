@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<service consumes="*" name="i5.las2peer.services.fileService.DownloadService" path="download" produces="text/plain" version="0.1">
+  <methods>
+    <method httpMethod="get" name="getFile7" path="{p1}/{p2}/{p3}/{p4}/{p5}/{p6}/{p7}" type="i5.las2peer.restMapper.HttpResponse">
+      <parameters>
+        <parameter annotation="path" index="0" name="p1" type="java.lang.String"/>
+        <parameter annotation="path" index="1" name="p2" type="java.lang.String"/>
+        <parameter annotation="path" index="2" name="p3" type="java.lang.String"/>
+        <parameter annotation="path" index="3" name="p4" type="java.lang.String"/>
+        <parameter annotation="path" index="4" name="p5" type="java.lang.String"/>
+        <parameter annotation="path" index="5" name="p6" type="java.lang.String"/>
+        <parameter annotation="path" index="6" name="p7" type="java.lang.String"/>
+      </parameters>
+    </method>
+    <method httpMethod="get" name="getFile5" path="{p1}/{p2}/{p3}/{p4}/{p5}" type="i5.las2peer.restMapper.HttpResponse">
+      <parameters>
+        <parameter annotation="path" index="0" name="p1" type="java.lang.String"/>
+        <parameter annotation="path" index="1" name="p2" type="java.lang.String"/>
+        <parameter annotation="path" index="2" name="p3" type="java.lang.String"/>
+        <parameter annotation="path" index="3" name="p4" type="java.lang.String"/>
+        <parameter annotation="path" index="4" name="p5" type="java.lang.String"/>
+      </parameters>
+    </method>
+    <method httpMethod="get" name="getFile4" path="{p1}/{p2}/{p3}/{p4}" type="i5.las2peer.restMapper.HttpResponse">
+      <parameters>
+        <parameter annotation="path" index="0" name="p1" type="java.lang.String"/>
+        <parameter annotation="path" index="1" name="p2" type="java.lang.String"/>
+        <parameter annotation="path" index="2" name="p3" type="java.lang.String"/>
+        <parameter annotation="path" index="3" name="p4" type="java.lang.String"/>
+      </parameters>
+    </method>
+    <method httpMethod="get" name="getFile8" path="{p1}/{p2}/{p3}/{p4}/{p5}/{p6}/{p7}/{p8}" type="i5.las2peer.restMapper.HttpResponse">
+      <parameters>
+        <parameter annotation="path" index="0" name="p1" type="java.lang.String"/>
+        <parameter annotation="path" index="1" name="p2" type="java.lang.String"/>
+        <parameter annotation="path" index="2" name="p3" type="java.lang.String"/>
+        <parameter annotation="path" index="3" name="p4" type="java.lang.String"/>
+        <parameter annotation="path" index="4" name="p5" type="java.lang.String"/>
+        <parameter annotation="path" index="5" name="p6" type="java.lang.String"/>
+        <parameter annotation="path" index="6" name="p7" type="java.lang.String"/>
+        <parameter annotation="path" index="7" name="p8" type="java.lang.String"/>
+      </parameters>
+    </method>
+    <method httpMethod="get" name="getFile0" type="i5.las2peer.restMapper.HttpResponse">
+      <parameters/>
+    </method>
+    <method httpMethod="get" name="getFile1" path="{p1}" type="i5.las2peer.restMapper.HttpResponse">
+      <parameters>
+        <parameter annotation="path" index="0" name="p1" type="java.lang.String"/>
+      </parameters>
+    </method>
+    <method httpMethod="get" name="getFile2" path="{p1}/{p2}" type="i5.las2peer.restMapper.HttpResponse">
+      <parameters>
+        <parameter annotation="path" index="0" name="p1" type="java.lang.String"/>
+        <parameter annotation="path" index="1" name="p2" type="java.lang.String"/>
+      </parameters>
+    </method>
+    <method httpMethod="get" name="getFile6" path="{p1}/{p2}/{p3}/{p4}/{p5}/{p6}" type="i5.las2peer.restMapper.HttpResponse">
+      <parameters>
+        <parameter annotation="path" index="0" name="p1" type="java.lang.String"/>
+        <parameter annotation="path" index="1" name="p2" type="java.lang.String"/>
+        <parameter annotation="path" index="2" name="p3" type="java.lang.String"/>
+        <parameter annotation="path" index="3" name="p4" type="java.lang.String"/>
+        <parameter annotation="path" index="4" name="p5" type="java.lang.String"/>
+        <parameter annotation="path" index="5" name="p6" type="java.lang.String"/>
+      </parameters>
+    </method>
+    <method httpMethod="get" name="getFile3" path="{p1}/{p2}/{p3}" type="i5.las2peer.restMapper.HttpResponse">
+      <parameters>
+        <parameter annotation="path" index="0" name="p1" type="java.lang.String"/>
+        <parameter annotation="path" index="1" name="p2" type="java.lang.String"/>
+        <parameter annotation="path" index="2" name="p3" type="java.lang.String"/>
+      </parameters>
+    </method>
+    <method httpMethod="get" name="getFile9" path="{p1}/{p2}/{p3}/{p4}/{p5}/{p6}/{p7}/{p8}/{p9}" type="i5.las2peer.restMapper.HttpResponse">
+      <parameters>
+        <parameter annotation="path" index="0" name="p1" type="java.lang.String"/>
+        <parameter annotation="path" index="1" name="p2" type="java.lang.String"/>
+        <parameter annotation="path" index="2" name="p3" type="java.lang.String"/>
+        <parameter annotation="path" index="3" name="p4" type="java.lang.String"/>
+        <parameter annotation="path" index="4" name="p5" type="java.lang.String"/>
+        <parameter annotation="path" index="5" name="p6" type="java.lang.String"/>
+        <parameter annotation="path" index="6" name="p7" type="java.lang.String"/>
+        <parameter annotation="path" index="7" name="p8" type="java.lang.String"/>
+        <parameter annotation="path" index="8" name="p9" type="java.lang.String"/>
+      </parameters>
+    </method>
+    <method httpMethod="get" name="getFile10" path="{p1}/{p2}/{p3}/{p4}/{p5}/{p6}/{p7}/{p8}/{p9}/{p10}" type="i5.las2peer.restMapper.HttpResponse">
+      <parameters>
+        <parameter annotation="path" index="0" name="p1" type="java.lang.String"/>
+        <parameter annotation="path" index="1" name="p2" type="java.lang.String"/>
+        <parameter annotation="path" index="2" name="p3" type="java.lang.String"/>
+        <parameter annotation="path" index="3" name="p4" type="java.lang.String"/>
+        <parameter annotation="path" index="4" name="p5" type="java.lang.String"/>
+        <parameter annotation="path" index="5" name="p6" type="java.lang.String"/>
+        <parameter annotation="path" index="6" name="p7" type="java.lang.String"/>
+        <parameter annotation="path" index="7" name="p8" type="java.lang.String"/>
+        <parameter annotation="path" index="8" name="p9" type="java.lang.String"/>
+        <parameter annotation="path" index="9" name="p10" type="java.lang.String"/>
+      </parameters>
+    </method>
+  </methods>
+</service>
