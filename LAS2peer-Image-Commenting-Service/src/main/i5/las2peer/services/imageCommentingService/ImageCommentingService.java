@@ -23,7 +23,7 @@ import java.io.IOException;
  * 
  *
  */
-@Path("example")
+@Path("LAS2peerFosdemDemo")
 @Version("0.1")
 public class ImageCommentingService extends Service {
 

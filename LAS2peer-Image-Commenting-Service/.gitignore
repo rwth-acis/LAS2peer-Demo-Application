@@ -1,13 +1,10 @@
 /export
 /tmp
-/.las2peer
-/startup
+/node-storage
 /log
 /lib
 etc/ivy/ivy.jar
 /service
 /etc/startup
-*.iml
-/.idea
 restMapping.xml
-/out
+i5.las2peer.services.imageCommentingService.ImageCommentingService.properties

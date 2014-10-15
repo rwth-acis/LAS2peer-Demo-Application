@@ -39,7 +39,7 @@ public class ServiceTest {
 	
 	private static final String testServiceClass = "i5.las2peer.services.imageCommentingService.ImageCommentingService";
 	
-	private static final String mainPath = "example/";
+	private static final String mainPath = "LAS2peerFosdemDemo/";
 	
 	
 	/**
