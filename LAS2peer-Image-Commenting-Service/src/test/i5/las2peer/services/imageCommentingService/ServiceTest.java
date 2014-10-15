@@ -14,6 +14,8 @@ import i5.las2peer.webConnector.client.MiniClient;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONValue;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -31,6 +33,9 @@ import org.junit.Test;
  * image, retrieval of a specific comment and the persistence of a
  * comment.
  * 
+ * NOTE: Test only work with a database setup with the sql-scripts located in
+ * the "scripts" folder. Credentials have to be supplied in the "etc" folder.
+ * 
  */
 public class ServiceTest {
 	
@@ -46,7 +51,7 @@ public class ServiceTest {
 	
 	private static final String testServiceClass = "i5.las2peer.services.imageCommentingService.ImageCommentingService";
 	
-	private static final String mainPath = "LAS2peerFosdemDemo/";
+	private static final String mainPath = "LAS2peerFosdemDemo/images";
 	
 	
 	/**
@@ -126,16 +131,21 @@ public class ServiceTest {
 	@Test
 	public void testCommentCollectionRetrieval()
 	{
+		String imageId = "SomeImage.png";
 		MiniClient c = new MiniClient();
 		c.setAddressPort(HTTP_ADDRESS, HTTP_PORT);
 		
 		try
 		{
 			c.setLogin(Long.toString(testAgent.getId()), testPass);
-            ClientResponse result=c.sendRequest("GET", mainPath +"validate", "");
+            ClientResponse result = c.sendRequest("GET", mainPath + "/" + imageId + "/comments", "");
             assertEquals(200, result.getHttpCode());
-            assertTrue(result.getResponse().trim().contains("adam")); //login name is part of response
-			System.out.println("Result of 'testValidateLogin': " + result.getResponse().trim());
+			Object o = JSONValue.parseWithException(result.getResponse().trim());
+			assertTrue(o instanceof JSONArray);
+			JSONArray jsonArray = (JSONArray) o;
+			assertTrue(jsonArray.size() == 3);
+			
+			System.out.println("Result of 'testCommentCollectionRetrieval': " + jsonArray.toString());
 		}
 		catch(Exception e)
 		{

@@ -1,13 +1,14 @@
 <ivy-module version="2.0">
-    <info organisation="i5" module="las2peer-service"/>
-    <publications>
+	<info organisation="i5" module="las2peer-service"/>
+	<publications>
 		<artifact type="pom" ext="pom" conf="default"/>
 		<artifact type="jar" ext="jar" conf="default"/>
 	</publications>
-    <dependencies>
-		<dependency org="org.json" name="json" rev="20140107"/>
-        <dependency org="i5" name="las2peer" rev="0.2.0" />
-        <dependency org="mysql" name="mysql-connector-java" rev="5.1.33"/>
-        <dependency org="i5" name="las2peer-web-connector" rev="0.2-SNAPSHOT"/>
-    </dependencies>
+	<dependencies>
+		<dependency org="mysql" name="mysql-connector-java" rev="5.1.33"/>
+		<dependency org="com.googlecode.json-simple" name="json-simple" rev="1.1"/>
+		
+		<dependency org="i5" name="las2peer" rev="0.2.0" />
+		<dependency org="i5" name="las2peer-web-connector" rev="0.2-SNAPSHOT"/>
+	</dependencies>
 </ivy-module>

@@ -2,9 +2,9 @@ package i5.las2peer.services.imageCommentingService.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 
 /**
@@ -119,72 +119,74 @@ public class MySQLDatabase{
 	
 	
 	/**
-	 * 
-	 * Executes a SQL statement to insert an entry into the database.
-	 * 
-	 * @param SQLStatment
-	 * 
-	 * @return true, if correctly inserted
-	 * 
-	 * @throws SQLException problems inserting
-	 * 
+	 *
+	 * Returns a collection of comments for the given imageId
+	 * from the database.
+	 *
+	 * @param imageId
+	 *
+	 * @return a ResultSet
+	 *
+	 * @throws SQLException problems with the database or not connected
+	 *
 	 */
-	public void store(String SQLStatment) throws SQLException{
+	public ResultSet queryForCollection(String imageId) throws SQLException{
 		// make sure one is connected to a database
 		if(!isConnected())
 			throw new SQLException("Not connected!");
 		
-		Statement statement = connection.createStatement();
-		statement.executeUpdate(SQLStatment);
+		PreparedStatement collectionQuery = this.connection.prepareStatement(
+				  "SELECT * FROM COMMENT WHERE IMAGEID = ?");
+		collectionQuery.setString(1, imageId);
 		
+		ResultSet resultSet = collectionQuery.executeQuery();
+		return resultSet;
 	}
 	
 	
 	/**
 	 *
-	 * Executes a given query on the database.
+	 * Returns the comment with the given commentId
+	 * from the database.
 	 *
-	 * @param SQLStatment
+	 * @param commentId
 	 *
 	 * @return a ResultSet
 	 *
-	 * @throws SQLException problems inserting or not connected
+	 * @throws SQLException problems with the database or not connected
 	 *
 	 */
-	public ResultSet query(String SQLStatment) throws SQLException{
+	public ResultSet queryForComment(String commentId) throws SQLException{
 		// make sure one is connected to a database
 		if(!isConnected())
 			throw new SQLException("Not connected!");
 		
-		Statement statement = connection.createStatement();
-		ResultSet resultSet = statement.executeQuery(SQLStatment);
-		return resultSet;
+		PreparedStatement collectionQuery = this.connection.prepareStatement(
+				  "SELECT * FROM COMMENT WHERE ID = ?");
+		collectionQuery.setString(1, commentId);
 		
+		ResultSet resultSet = collectionQuery.executeQuery();
+		return resultSet;
 	}
 	
 	
-	public String getUser(){
-		return this.username;
-	}
-	
-	
-	public String getPassword(){
-		return this.password;
-	}
-	
-	
-	public String getDatabase(){
-		return this.database;
-	}
-	
-	
-	public String getHost(){
-		return this.host;
-	}
-	
-	
-	public int getPort(){
-		return this.port;
+	/**
+	 *
+	 * Stores a comment with the given parameters to the database.
+	 *
+	 * @param author
+	 * @param imageId
+	 * @param content
+	 * @param parameters
+	 *
+	 * @throws SQLException problems inserting or not connected
+	 *
+	 */
+	public void insertComment(String author, String imageId, String content, String parameters) throws SQLException{
+		// make sure one is connected to a database
+		if(!isConnected())
+			throw new SQLException("Not connected!");
+		//TODO
 	}
 	
 	
