@@ -5,7 +5,7 @@
 		<artifact type="jar" ext="jar" conf="default"/>
 	</publications>
     <dependencies>
-    	<dependency org="org.json" name="json" rev="20140107"/>
+		<dependency org="org.json" name="json" rev="20140107"/>
         <dependency org="i5" name="las2peer" rev="0.2.0" />
         <dependency org="mysql" name="mysql-connector-java" rev="5.1.33"/>
         <dependency org="i5" name="las2peer-web-connector" rev="0.2-SNAPSHOT"/>

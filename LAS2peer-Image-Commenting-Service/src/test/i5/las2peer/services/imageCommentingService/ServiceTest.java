@@ -20,10 +20,17 @@ import org.junit.Test;
 
 
 /**
- * Example Test Class demonstrating a basic JUnit test structure.
  * 
+ * LAS2peer Image Commenting Service - Tests
  * 
- *
+ * This service is part of the LAS2peer Demo Application.
+ * https://github.com/rwth-acis/LAS2peer-Demo-Application/
+ * 
+ * These JUnit test cases test the three main functionalities of the
+ * service, which are retrieval of a collection of all comments of an
+ * image, retrieval of a specific comment and the persistence of a
+ * comment.
+ * 
  */
 public class ServiceTest {
 	
@@ -114,11 +121,10 @@ public class ServiceTest {
 	
 	/**
 	 * 
-	 * Tests the validate method.
 	 * 
 	 */
 	@Test
-	public void testValidateLogin()
+	public void testCommentCollectionRetrieval()
 	{
 		MiniClient c = new MiniClient();
 		c.setAddressPort(HTTP_ADDRESS, HTTP_PORT);
@@ -142,23 +148,17 @@ public class ServiceTest {
 	
 	/**
 	 * 
-	 * Test the example method that consumes one path parameter
-	 * which we give the value "testInput" in this test.
 	 * 
 	 */
 	@Test
-	public void testExampleMethod()
+	public void testCommentRetrieval()
 	{
 		MiniClient c = new MiniClient();
 		c.setAddressPort(HTTP_ADDRESS, HTTP_PORT);
 		
 		try
 		{
-			c.setLogin(Long.toString(testAgent.getId()), testPass);
-            ClientResponse result=c.sendRequest("POST", mainPath +"myMethodPath/testInput", ""); //testInput is the pathParam
-            assertEquals(200, result.getHttpCode());
-            assertTrue(result.getResponse().trim().contains("testInput")); //"testInput" name is part of response
-			System.out.println("Result of 'testExampleMethod': " + result.getResponse().trim());
+			//Something
 		}
 		catch(Exception e)
 		{
@@ -167,10 +167,34 @@ public class ServiceTest {
 		}
 		
     }
-
+	
+	
+	/**
+	 * 
+	 * 
+	 */
+	@Test
+	public void testCommentPersistence()
+	{
+		MiniClient c = new MiniClient();
+		c.setAddressPort(HTTP_ADDRESS, HTTP_PORT);
+		
+		try
+		{
+			//Something
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			fail ( "Exception: " + e );
+		}
+		
+    }
+	
+	
 	/**
 	 * Test the ServiceClass for valid rest mapping.
-	 * Important for development.
+	 * Important for development, will be removed in final version.
 	 */
 	@Test
 	public void testDebugMapping()
@@ -178,4 +202,5 @@ public class ServiceTest {
 		ImageCommentingService cl = new ImageCommentingService();
 		assertTrue(cl.debugMapping());
 	}
+	
 }

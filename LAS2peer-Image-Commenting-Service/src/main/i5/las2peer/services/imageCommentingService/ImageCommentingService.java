@@ -52,35 +52,6 @@ public class ImageCommentingService extends Service {
     }
     
     
-	/**
-	 * Method for debugging purposes.
-	 * Here the concept of restMapping validation is shown.
-	 * It is important to check, if all annotations are correct and consistent.
-	 * Otherwise the service will not be accessible by the WebConnector.
-	 * Best to do it in the unit tests.
-	 * To avoid being overlooked/ignored the method is implemented here and not in the test section.
-	 * @return  true, if mapping correct
-	 */
-    public boolean debugMapping()
-	{
-		String XML_LOCATION = "./restMapping.xml";
-		String xml= getRESTMapping();
-
-		try{
-			RESTMapper.writeFile(XML_LOCATION,xml);
-		}catch (IOException e){
-			e.printStackTrace();
-		}
-
-		XMLCheck validator= new XMLCheck();
-		ValidationResult result = validator.validate(xml);
-
-		if(result.isValid())
-			return true;
-		return false;
-	}
-    
-    
     /**
      * 
      * 
@@ -122,4 +93,25 @@ public class ImageCommentingService extends Service {
     }
     
     
+	/**
+	 * To be removed in final version..
+	 */
+    public boolean debugMapping()
+	{
+		String XML_LOCATION = "./restMapping.xml";
+		String xml= getRESTMapping();
+
+		try{
+			RESTMapper.writeFile(XML_LOCATION,xml);
+		}catch (IOException e){
+			e.printStackTrace();
+		}
+
+		XMLCheck validator= new XMLCheck();
+		ValidationResult result = validator.validate(xml);
+
+		if(result.isValid())
+			return true;
+		return false;
+	}
 }
