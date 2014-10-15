@@ -2,31 +2,36 @@ package i5.las2peer.services.imageCommentingService;
 
 import i5.las2peer.api.Service;
 import i5.las2peer.restMapper.RESTMapper;
+import i5.las2peer.restMapper.annotations.Consumes;
 import i5.las2peer.restMapper.annotations.GET;
-import i5.las2peer.restMapper.annotations.POST;
+import i5.las2peer.restMapper.annotations.PUT;
 import i5.las2peer.restMapper.annotations.Path;
 import i5.las2peer.restMapper.annotations.PathParam;
+import i5.las2peer.restMapper.annotations.Produces;
 import i5.las2peer.restMapper.annotations.Version;
 import i5.las2peer.restMapper.tools.ValidationResult;
 import i5.las2peer.restMapper.tools.XMLCheck;
-import i5.las2peer.security.UserAgent;
 
 import java.io.IOException;
 
+import org.json.JSONObject;
+
+
 /**
  * 
- * LAS2peer Service
+ * LAS2peer Image Commenting Service
  * 
- * This is a template for a very basic LAS2peer service
- * that uses the LAS2peer Web-Connector for RESTful access to it.
+ * This service is part of the LAS2peer Demo Application.
+ * https://github.com/rwth-acis/LAS2peer-Demo-Application/
  * 
+ * It connects to a MySQL database and offers an interface
+ * to load and store image comments together with processing
+ * parameters.
  * 
- *
  */
 @Path("LAS2peerFosdemDemo")
 @Version("0.1")
 public class ImageCommentingService extends Service {
-
 
 
 	/**
@@ -45,7 +50,8 @@ public class ImageCommentingService extends Service {
         }
         return result;
     }
-
+    
+    
 	/**
 	 * Method for debugging purposes.
 	 * Here the concept of restMapping validation is shown.
@@ -74,36 +80,46 @@ public class ImageCommentingService extends Service {
 		return false;
 	}
     
-    /**
-     * 
-     * Simple function to validate a user login.
-     * Basically it only serves as a "calling point" and does not really validate a user
-     * (since this is done previously by LAS2peer itself, the user does not reach this method
-     * if he or she is not authenticated).
-     * 
-     */
-    @GET
-    @Path("validate")
-    public String validateLogin()
-    {
-    	String returnString = "";
-    	returnString += "You are " + ((UserAgent) getActiveAgent()).getLoginName() + " and your login is valid!";
-    	return returnString;
-    }
     
     /**
      * 
-     * Another example method.
-     * 
-     * @param myInput
      * 
      */
-    @POST
-    @Path("myMethodPath/{input}")
-    public String exampleMethod( @PathParam("input") String myInput)
+    @GET
+    @Produces("application/json")
+    @Path("/images/{imageId}/comments")
+    public JSONObject getCommentCollection(@PathParam("imageId") String imageId)
     {
-    	String returnString = "";
-    	returnString += "You have entered " + myInput + "!";
-    	return returnString;
+    	JSONObject commentCollection = null;
+    	return commentCollection;
     }
+    
+    
+    /**
+     * 
+     * 
+     */
+    @GET
+    @Produces("application/json")
+    @Path("/images/{imageId}/comments/{commentId}")
+    public JSONObject getComment(@PathParam("imageId") String imageId, @PathParam("commentId") String commentId)
+    {
+    	JSONObject comment = null;
+    	return comment;
+    }
+    
+    
+    /**
+     * 
+     * 
+     */
+    @PUT
+    @Consumes("application/json")
+    @Path("/images/{imageId}/comments")
+    public void storeComment(@PathParam("imageId") String imageId)
+    {
+    	//do something
+    }
+    
+    
 }
