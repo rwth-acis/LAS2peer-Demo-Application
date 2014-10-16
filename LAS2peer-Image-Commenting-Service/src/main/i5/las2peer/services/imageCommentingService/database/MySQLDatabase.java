@@ -161,11 +161,11 @@ public class MySQLDatabase{
 		if(!isConnected())
 			throw new SQLException("Not connected!");
 		
-		PreparedStatement collectionQuery = this.connection.prepareStatement(
+		PreparedStatement commentQuery = this.connection.prepareStatement(
 				  "SELECT * FROM COMMENT WHERE ID = ?");
-		collectionQuery.setString(1, commentId);
+		commentQuery.setString(1, commentId);
 		
-		ResultSet resultSet = collectionQuery.executeQuery();
+		ResultSet resultSet = commentQuery.executeQuery();
 		return resultSet;
 	}
 	
@@ -186,7 +186,16 @@ public class MySQLDatabase{
 		// make sure one is connected to a database
 		if(!isConnected())
 			throw new SQLException("Not connected!");
-		//TODO
+		
+		PreparedStatement insertCommentQuery = this.connection.prepareStatement(
+				  "INSERT INTO COMMENT (AUTHOR,IMAGEID,COMMENT_CONTENT,PROCESSING_PARAMETERS)"
+				  + "VALUES(?,?,?,?)");
+		insertCommentQuery.setString(1, author);
+		insertCommentQuery.setString(2, imageId);
+		insertCommentQuery.setString(3, content);
+		insertCommentQuery.setString(4, parameters);
+		
+		insertCommentQuery.executeUpdate();
 	}
 	
 	

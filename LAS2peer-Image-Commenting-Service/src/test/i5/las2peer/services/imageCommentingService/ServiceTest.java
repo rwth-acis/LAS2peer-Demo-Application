@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import i5.las2peer.p2p.LocalNode;
+import i5.las2peer.restMapper.data.Pair;
 import i5.las2peer.security.ServiceAgent;
 import i5.las2peer.security.UserAgent;
 import i5.las2peer.testing.MockAgentFactory;
@@ -205,17 +206,51 @@ public class ServiceTest {
 	
 	/**
 	 * 
+	 * Tests the comment persistence by first checking the size of the comments
+	 * for one image, then inserting a new comment and then again checking the size
+	 * of the collection.
 	 * 
 	 */
+	@SuppressWarnings("unchecked")
 	@Test
 	public void testCommentPersistence()
 	{
 		MiniClient c = new MiniClient();
 		c.setAddressPort(HTTP_ADDRESS, HTTP_PORT);
+		String imageId = "SomeImage2.png";
+		String content = "My Even Newer Great Comment";
+		String parameters = "parametersLater";
+		String author = "Imagine A New Name";
 		
+    	JSONObject comment = new JSONObject();
+		comment.put("author", author);
+		comment.put("content", content);
+		comment.put("parameters", parameters);
+		
+		System.out.println("Results of testCommentPersistance:");
 		try
 		{
-			//Something
+			
+			c.setLogin(Long.toString(testAgent.getId()), testPass);
+			ClientResponse result = c.sendRequest("GET", mainPath + "/" + imageId + "/comments", "");
+			assertEquals(200, result.getHttpCode());
+			Object o = JSONValue.parseWithException(result.getResponse().trim());
+			JSONArray jsonArray = (JSONArray) o;
+			int sizeOfCollection = jsonArray.size();
+			System.out.println("Size of image collection before: " + sizeOfCollection);
+			
+			result = c.sendRequest("PUT", mainPath + "/" + imageId + "/comments",comment.toJSONString(),
+					"application/json","*/*",new Pair[]{});
+			assertEquals(201, result.getHttpCode());
+			System.out.println("Result of 'save comment' invocation: " + result.getResponse());
+			
+			result = c.sendRequest("GET", mainPath + "/" + imageId + "/comments", "");
+			assertEquals(200, result.getHttpCode());
+			o = JSONValue.parseWithException(result.getResponse().trim());
+			jsonArray = (JSONArray) o;
+			assertEquals(sizeOfCollection + 1, jsonArray.size());
+			System.out.println("Size of image collection after: " + jsonArray.size());
+
 		}
 		catch(Exception e)
 		{

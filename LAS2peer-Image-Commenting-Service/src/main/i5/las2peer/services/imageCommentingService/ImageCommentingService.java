@@ -5,6 +5,7 @@ import i5.las2peer.restMapper.HttpResponse;
 import i5.las2peer.restMapper.MediaType;
 import i5.las2peer.restMapper.RESTMapper;
 import i5.las2peer.restMapper.annotations.Consumes;
+import i5.las2peer.restMapper.annotations.ContentParam;
 import i5.las2peer.restMapper.annotations.GET;
 import i5.las2peer.restMapper.annotations.PUT;
 import i5.las2peer.restMapper.annotations.Path;
@@ -21,6 +22,8 @@ import java.sql.SQLException;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
+import org.json.simple.parser.ParseException;
 
 /**
  * 
@@ -32,6 +35,9 @@ import org.json.simple.JSONObject;
  * It connects to a MySQL database and offers an interface
  * to load and store image comments together with processing
  * parameters.
+ * 
+ * Please note that this service does not provide all the sanity
+ * checks that would be needed if it was reachable to the outside.
  * 
  */
 @Path("LAS2peerFosdemDemo/images")
@@ -94,6 +100,7 @@ public class ImageCommentingService extends Service {
      * Returns a collection of comments for the given imageId.
      * 
      * @param imageId
+     * 
      */
     @SuppressWarnings("unchecked")
 	@GET
@@ -131,6 +138,7 @@ public class ImageCommentingService extends Service {
      * 
      * @param imageId
      * @param commentId
+     * 
      */
     @SuppressWarnings("unchecked")
 	@GET
@@ -151,7 +159,6 @@ public class ImageCommentingService extends Service {
 				
 				//Some sanity checks:
 				if(receveidImageId.equals(imageId) && receivedCommentId.equals(commentId)){
-					comment.put("commentId", receivedCommentId);
 					comment.put("author", author);
 					comment.put("imageId", receveidImageId);
 					comment.put("content", content);
@@ -173,9 +180,8 @@ public class ImageCommentingService extends Service {
 	    	return response;
 		}
 
-		HttpResponse response = new HttpResponse(comment.toJSONString());
+		HttpResponse response = new HttpResponse(comment.toJSONString(), 200);
 		response.setHeader("Content-Type", MediaType.APPLICATION_JSON);
-		response.setStatus(200);
     	return response;
     }
     
@@ -184,14 +190,36 @@ public class ImageCommentingService extends Service {
      * 
      * Stores a given comment to the database.
      * 
+     * The passed content has to be a JSON object containing the three
+     * (String) fields: author, content, parameters)
+     * @param imageId
+     * @param content
+     * 
      */
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/{imageId}/comments")
-    public HttpResponse HttpResponse (@PathParam("imageId") String imageId)
+    public HttpResponse storeComment(@PathParam("imageId") String imageId, @ContentParam String content)
     {
-		HttpResponse response = new HttpResponse("successfull");
-		response.setStatus(201);
+    	
+		try {
+			JSONObject o = (JSONObject) JSONValue.parseWithException(content);
+			String author = (String) o.get("author");
+			String commentContent = (String) o.get("content");
+			String processingParameters = (String) o.get("parameters");
+			this.database.insertComment(author, imageId, commentContent, processingParameters);
+
+		} catch (ParseException e) {
+			e.printStackTrace();
+			HttpResponse response = new HttpResponse("Passed content was not readable!", 500);
+	    	return response;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			HttpResponse response = new HttpResponse("The query has lead to an error!", 500);
+	    	return response;
+		}
+		
+		HttpResponse response = new HttpResponse("Comment successfully stored!", 201);
     	return response;
     }
     
@@ -217,4 +245,6 @@ public class ImageCommentingService extends Service {
 			return true;
 		return false;
 	}
+    
+    
 }
