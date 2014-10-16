@@ -38,14 +38,16 @@ import org.json.simple.JSONObject;
 @Version("0.1")
 public class ImageCommentingService extends Service {
 	
-	
+	//Credentials that will be read from a configuration file at
+	//the service startup.
 	private String databaseName;
 	private String databaseHost;
 	private int databasePort;
 	private String databaseUser;
 	private String databasePassword;
 	
-	private MySQLDatabase database; //The database instance to write to.
+	//The database instance to fetch and write the comments from.
+	private MySQLDatabase database;
 	
 	
 	/**
@@ -91,6 +93,7 @@ public class ImageCommentingService extends Service {
      * 
      * Returns a collection of comments for the given imageId.
      * 
+     * @param imageId
      */
     @SuppressWarnings("unchecked")
 	@GET
@@ -99,24 +102,15 @@ public class ImageCommentingService extends Service {
     public HttpResponse getCommentCollection(@PathParam("imageId") String imageId)
     {
     	JSONArray comments = new JSONArray();
-
+    	
     	try {
 			ResultSet result = this.database.queryForCollection(imageId);
 			while(result.next()){
 		    	JSONObject comment = new JSONObject();
 		    	
 		    	int commentId = result.getInt(1);
-				String author = result.getString(2);
-				//the third would be the imageId
-				String content = result.getString(4);
-				String parameters = result.getString(5);
 				comment.put("commentId", commentId);
-				comment.put("author", author);
-				comment.put("content", content);
-				comment.put("parameters", parameters); //TODO
-				
-				comments.add(comment);
-				
+				comments.add(comment);	
 			}
 		} catch (SQLException e) {
 			System.out.println(e);
@@ -135,13 +129,50 @@ public class ImageCommentingService extends Service {
      * 
      * Returns a comment for the given imageId and commentId.
      * 
+     * @param imageId
+     * @param commentId
      */
-    @GET
+    @SuppressWarnings("unchecked")
+	@GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/{imageId}/comments/{commentId}")
     public HttpResponse getComment(@PathParam("imageId") String imageId, @PathParam("commentId") String commentId)
     {
     	JSONObject comment = new JSONObject();
+    	
+    	try {
+			ResultSet result = this.database.queryForComment(commentId);
+			if(result.next()){
+				String receivedCommentId = result.getString(1);
+				String author = result.getString(2);
+				String receveidImageId = result.getString(3);
+				String content = result.getString(4);
+				String parameters = result.getString(5);
+				
+				//Some sanity checks:
+				if(receveidImageId.equals(imageId) && receivedCommentId.equals(commentId)){
+					comment.put("commentId", receivedCommentId);
+					comment.put("author", author);
+					comment.put("imageId", receveidImageId);
+					comment.put("content", content);
+					comment.put("parameters", parameters);
+					comment.put("commentId", commentId);
+				}
+				else{
+					HttpResponse response = new HttpResponse("Comment is not available!", 404);
+			    	return response;
+				}
+			}
+			else{
+				HttpResponse response = new HttpResponse("Comment is not available!", 404);
+		    	return response;
+			}
+		} catch (SQLException e) {
+			System.out.println(e);
+			HttpResponse response = new HttpResponse(e.toString(), 500);
+	    	return response;
+		}
+
 		HttpResponse response = new HttpResponse(comment.toJSONString());
 		response.setHeader("Content-Type", MediaType.APPLICATION_JSON);
 		response.setStatus(200);

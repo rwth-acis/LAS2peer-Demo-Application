@@ -15,6 +15,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -163,12 +164,31 @@ public class ServiceTest {
 	@Test
 	public void testCommentRetrieval()
 	{
+		String imageId = "SomeImage.png";
+		String commentId = "1";
+		String content = "Great Image";
+		String parameters = "parametersLater";
+		String author = "Thomas";
+		
 		MiniClient c = new MiniClient();
 		c.setAddressPort(HTTP_ADDRESS, HTTP_PORT);
 		
 		try
 		{
-			//Something
+			c.setLogin(Long.toString(testAgent.getId()), testPass);
+            ClientResponse result = c.sendRequest("GET", mainPath + "/" + imageId + "/comments/" + commentId, "");
+            assertEquals(200, result.getHttpCode());
+			Object o = JSONValue.parseWithException(result.getResponse().trim());
+			assertTrue(o instanceof JSONObject);
+			JSONObject jsonObject = (JSONObject) o;
+			assertTrue(jsonObject.size() == 5);
+			assertEquals(commentId, jsonObject.get("commentId"));
+			assertEquals(author, jsonObject.get("author"));
+			assertEquals(imageId, jsonObject.get("imageId"));
+			assertEquals(content, jsonObject.get("content"));
+			assertEquals(parameters, jsonObject.get("parameters"));
+			
+			System.out.println("Result of 'testCommentRetrieval': " + jsonObject.toString());
 		}
 		catch(Exception e)
 		{

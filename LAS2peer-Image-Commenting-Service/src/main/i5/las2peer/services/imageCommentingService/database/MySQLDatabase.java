@@ -136,7 +136,7 @@ public class MySQLDatabase{
 			throw new SQLException("Not connected!");
 		
 		PreparedStatement collectionQuery = this.connection.prepareStatement(
-				  "SELECT * FROM COMMENT WHERE IMAGEID = ?");
+				  "SELECT ID FROM COMMENT WHERE IMAGEID = ?");
 		collectionQuery.setString(1, imageId);
 		
 		ResultSet resultSet = collectionQuery.executeQuery();
