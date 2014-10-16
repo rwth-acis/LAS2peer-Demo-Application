@@ -200,7 +200,6 @@ public class ServiceTest {
 			e.printStackTrace();
 			fail ( "Exception: " + e );
 		}
-		
     }
 	
 	
@@ -257,19 +256,7 @@ public class ServiceTest {
 			e.printStackTrace();
 			fail ( "Exception: " + e );
 		}
-		
     }
 	
-	
-	/**
-	 * Test the ServiceClass for valid rest mapping.
-	 * Important for development, will be removed in final version.
-	 */
-	@Test
-	public void testDebugMapping()
-	{
-		ImageCommentingService cl = new ImageCommentingService();
-		assertTrue(cl.debugMapping());
-	}
 	
 }

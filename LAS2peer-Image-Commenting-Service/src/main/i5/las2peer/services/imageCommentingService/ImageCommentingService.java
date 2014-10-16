@@ -12,11 +12,8 @@ import i5.las2peer.restMapper.annotations.Path;
 import i5.las2peer.restMapper.annotations.PathParam;
 import i5.las2peer.restMapper.annotations.Produces;
 import i5.las2peer.restMapper.annotations.Version;
-import i5.las2peer.restMapper.tools.ValidationResult;
-import i5.las2peer.restMapper.tools.XMLCheck;
 import i5.las2peer.services.imageCommentingService.database.MySQLDatabase;
 
-import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -37,7 +34,7 @@ import org.json.simple.parser.ParseException;
  * parameters.
  * 
  * Please note that this service does not provide all the sanity
- * checks that would be needed if it was reachable to the outside.
+ * checks that would be needed if it was available to the outside.
  * 
  */
 @Path("LAS2peerFosdemDemo/images")
@@ -208,7 +205,6 @@ public class ImageCommentingService extends Service {
 			String commentContent = (String) o.get("content");
 			String processingParameters = (String) o.get("parameters");
 			this.database.insertComment(author, imageId, commentContent, processingParameters);
-
 		} catch (ParseException e) {
 			e.printStackTrace();
 			HttpResponse response = new HttpResponse("Passed content was not readable!", 500);
@@ -222,29 +218,5 @@ public class ImageCommentingService extends Service {
 		HttpResponse response = new HttpResponse("Comment successfully stored!", 201);
     	return response;
     }
-    
-    
-	/**
-	 * To be removed in final version..
-	 */
-    public boolean debugMapping()
-	{
-		String XML_LOCATION = "./restMapping.xml";
-		String xml= getRESTMapping();
-
-		try{
-			RESTMapper.writeFile(XML_LOCATION,xml);
-		}catch (IOException e){
-			e.printStackTrace();
-		}
-
-		XMLCheck validator= new XMLCheck();
-		ValidationResult result = validator.validate(xml);
-
-		if(result.isValid())
-			return true;
-		return false;
-	}
-    
     
 }
