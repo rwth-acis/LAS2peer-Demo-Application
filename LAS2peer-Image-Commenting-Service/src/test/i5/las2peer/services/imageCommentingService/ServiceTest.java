@@ -127,6 +127,8 @@ public class ServiceTest {
 	
 	/**
 	 * 
+	 * Tries to retrieve a comment collection for a predefined image.
+	 * Tests for type and size of result.
 	 * 
 	 */
 	@Test
@@ -139,8 +141,8 @@ public class ServiceTest {
 		try
 		{
 			c.setLogin(Long.toString(testAgent.getId()), testPass);
-            ClientResponse result = c.sendRequest("GET", mainPath + "/" + imageId + "/comments", "");
-            assertEquals(200, result.getHttpCode());
+			ClientResponse result = c.sendRequest("GET", mainPath + "/" + imageId + "/comments", "");
+			assertEquals(200, result.getHttpCode());
 			Object o = JSONValue.parseWithException(result.getResponse().trim());
 			assertTrue(o instanceof JSONArray);
 			JSONArray jsonArray = (JSONArray) o;
@@ -159,6 +161,8 @@ public class ServiceTest {
 	
 	/**
 	 * 
+	 * Tries to retrieve a specific comment for a specific image.
+	 * Checks the type, size and content of the response for correctness.
 	 * 
 	 */
 	@Test
@@ -176,8 +180,8 @@ public class ServiceTest {
 		try
 		{
 			c.setLogin(Long.toString(testAgent.getId()), testPass);
-            ClientResponse result = c.sendRequest("GET", mainPath + "/" + imageId + "/comments/" + commentId, "");
-            assertEquals(200, result.getHttpCode());
+			ClientResponse result = c.sendRequest("GET", mainPath + "/" + imageId + "/comments/" + commentId, "");
+			assertEquals(200, result.getHttpCode());
 			Object o = JSONValue.parseWithException(result.getResponse().trim());
 			assertTrue(o instanceof JSONObject);
 			JSONObject jsonObject = (JSONObject) o;
