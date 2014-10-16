@@ -241,7 +241,7 @@ public class ServiceTest {
 			result = c.sendRequest("PUT", mainPath + "/" + imageId + "/comments",comment.toJSONString(),
 					"application/json","*/*",new Pair[]{});
 			assertEquals(201, result.getHttpCode());
-			System.out.println("Result of 'save comment' invocation: " + result.getResponse());
+			System.out.print("Result of 'save comment' invocation: " + result.getResponse());
 			
 			result = c.sendRequest("GET", mainPath + "/" + imageId + "/comments", "");
 			assertEquals(200, result.getHttpCode());
