@@ -5,6 +5,7 @@ import i5.las2peer.execution.L2pServiceException;
 import i5.las2peer.p2p.AgentNotKnownException;
 import i5.las2peer.p2p.TimeoutException;
 import i5.las2peer.restMapper.HttpResponse;
+import i5.las2peer.restMapper.MediaType;
 import i5.las2peer.restMapper.RESTMapper;
 import i5.las2peer.restMapper.annotations.*;
 import i5.las2peer.security.AgentException;
@@ -104,7 +105,7 @@ public class AlbumService extends Service {
 
 	@GET
 	@Path("{imageId}")
-	@Produces("text/plain")
+	@Produces("image/jpeg")
 	public HttpResponse getImage(@PathParam("imageId") String imageId)
 	{
 		HttpResponse response=null;
@@ -114,6 +115,7 @@ public class AlbumService extends Service {
 			result = ((HttpResponse) this.invokeServiceMethod("i5.las2peer.services.fileService.DownloadService","getFile1",imageId)).getResult();
 
 			response=new HttpResponse(result,200);
+
 		}catch (L2pServiceException e){
 			e.printStackTrace();
 		}catch (AgentNotKnownException e){

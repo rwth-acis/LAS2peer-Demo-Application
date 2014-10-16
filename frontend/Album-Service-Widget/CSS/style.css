@@ -16,7 +16,7 @@ div, input {
 }
 
 html {
-    min-height: 200px;
+    min-height: 20s0px;
     min-width: 250px;
     height: 100%;
     margin:0;
@@ -43,7 +43,7 @@ html {
   
   position: relative;
 }
-#main span{
+#main > span{
   height:10px;
   display:block;
   
@@ -131,11 +131,21 @@ input[type="text"] {
   padding:5px;
   border: 1px solid #808080;
   background-color:white;
+  text-align: center;
 }
 .selected {
   background-color:#3174ff;
 }
 .imageTile img{
+  height: auto;
+  width: auto;  
+  max-height: 100px;
+  max-width:100px;  
+  vertical-align: middle;
+}
+
+.imageTile .imgHelper {
+  display: inline-block;
   height: 100%;
-  width: auto;
+  vertical-align: middle;
 }
