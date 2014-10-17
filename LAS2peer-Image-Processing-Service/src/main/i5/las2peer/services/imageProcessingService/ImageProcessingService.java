@@ -1,17 +1,18 @@
 package i5.las2peer.services.imageProcessingService;
 
 import i5.las2peer.api.Service;
+import i5.las2peer.restMapper.HttpResponse;
+import i5.las2peer.restMapper.MediaType;
 import i5.las2peer.restMapper.RESTMapper;
-import i5.las2peer.restMapper.annotations.GET;
+import i5.las2peer.restMapper.annotations.Consumes;
+import i5.las2peer.restMapper.annotations.ContentParam;
 import i5.las2peer.restMapper.annotations.POST;
 import i5.las2peer.restMapper.annotations.Path;
-import i5.las2peer.restMapper.annotations.PathParam;
+import i5.las2peer.restMapper.annotations.Produces;
 import i5.las2peer.restMapper.annotations.Version;
-import i5.las2peer.restMapper.tools.ValidationResult;
-import i5.las2peer.restMapper.tools.XMLCheck;
-import i5.las2peer.security.UserAgent;
-
-import java.io.IOException;
+import net.minidev.json.JSONObject;
+import net.minidev.json.JSONValue;
+import net.minidev.json.parser.ParseException;
 
 /**
  * 
@@ -23,7 +24,7 @@ import java.io.IOException;
  * 
  *
  */
-@Path("example")
+@Path("LAS2peerFosdemDemo")
 @Version("0.1")
 public class ImageProcessingService extends Service {
 
@@ -46,64 +47,30 @@ public class ImageProcessingService extends Service {
         return result;
     }
 
-	/**
-	 * Method for debugging purposes.
-	 * Here the concept of restMapping validation is shown.
-	 * It is important to check, if all annotations are correct and consistent.
-	 * Otherwise the service will not be accessible by the WebConnector.
-	 * Best to do it in the unit tests.
-	 * To avoid being overlooked/ignored the method is implemented here and not in the test section.
-	 * @return  true, if mapping correct
-	 */
-    public boolean debugMapping()
-	{
-		String XML_LOCATION = "./restMapping.xml";
-		String xml= getRESTMapping();
-
-		try{
-			RESTMapper.writeFile(XML_LOCATION,xml);
-		}catch (IOException e){
-			e.printStackTrace();
-		}
-
-		XMLCheck validator= new XMLCheck();
-		ValidationResult result = validator.validate(xml);
-
-		if(result.isValid())
-			return true;
-		return false;
-	}
     
     /**
      * 
-     * Simple function to validate a user login.
-     * Basically it only serves as a "calling point" and does not really validate a user
-     * (since this is done previously by LAS2peer itself, the user does not reach this method
-     * if he or she is not authenticated).
-     * 
-     */
-    @GET
-    @Path("validate")
-    public String validateLogin()
-    {
-    	String returnString = "";
-    	returnString += "You are " + ((UserAgent) getActiveAgent()).getLoginName() + " and your login is valid!";
-    	return returnString;
-    }
-    
-    /**
-     * 
-     * Another example method.
-     * 
-     * @param myInput
      * 
      */
     @POST
-    @Path("myMethodPath/{input}")
-    public String exampleMethod( @PathParam("input") String myInput)
+    @Produces(MediaType.IMAGE_JPEG)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("processImage")
+    public HttpResponse processImage(@ContentParam String content)
     {
-    	String returnString = "";
-    	returnString += "You have entered " + myInput + "!";
-    	return returnString;
+    	String image = "";
+		JSONObject o;
+		try {
+			o = (JSONObject) JSONValue.parseWithException(content);
+			image = (String) o.get("image");
+			//TODO
+		} catch (ParseException e) {
+			e.printStackTrace();
+			HttpResponse response = new HttpResponse("Passed content was not readable!", 500);
+	    	return response;
+		}
+		
+		HttpResponse response = new HttpResponse(image, 200);
+    	return response;
     }
 }

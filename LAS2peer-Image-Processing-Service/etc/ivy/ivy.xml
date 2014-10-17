@@ -7,5 +7,6 @@
     <dependencies>
         <dependency org="i5" name="las2peer" rev="0.3-SNAPSHOT" />		 
         <dependency org="i5" name="las2peer-web-connector" rev="0.3-SNAPSHOT"/>
+        <dependency org="net.minidev" name="json-smart" rev="2.0"/>
     </dependencies>
 </ivy-module>
