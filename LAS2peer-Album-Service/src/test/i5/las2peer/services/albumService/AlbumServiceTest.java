@@ -116,61 +116,10 @@ public class AlbumServiceTest{
     }
 	
 	
-	/**
-	 * 
-	 * Tests the validate method.
-	 * 
-	 */
-	@Test
-	public void testValidateLogin()
-	{
-		MiniClient c = new MiniClient();
-		c.setAddressPort(HTTP_ADDRESS, HTTP_PORT);
-		
-		try
-		{
-			c.setLogin(Long.toString(testAgent.getId()), testPass);
-            ClientResponse result=c.sendRequest("GET", mainPath +"validate", "");
-            assertEquals(200, result.getHttpCode());
-            assertTrue(result.getResponse().trim().contains("adam")); //login name is part of response
-			System.out.println("Result of 'testValidateLogin': " + result.getResponse().trim());
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-			fail ( "Exception: " + e );
-		}
-		
-    }
+
 	
 	
-	/**
-	 * 
-	 * Test the example method that consumes one path parameter
-	 * which we give the value "testInput" in this test.
-	 * 
-	 */
-	@Test
-	public void testExampleMethod()
-	{
-		MiniClient c = new MiniClient();
-		c.setAddressPort(HTTP_ADDRESS, HTTP_PORT);
-		
-		try
-		{
-			c.setLogin(Long.toString(testAgent.getId()), testPass);
-            ClientResponse result=c.sendRequest("POST", mainPath +"myMethodPath/testInput", ""); //testInput is the pathParam
-            assertEquals(200, result.getHttpCode());
-            assertTrue(result.getResponse().trim().contains("testInput")); //"testInput" name is part of response
-			System.out.println("Result of 'testExampleMethod': " + result.getResponse().trim());
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-			fail ( "Exception: " + e );
-		}
-		
-    }
+
 	/**
 	 * Method for debugging purposes.
 	 * Here the concept of restMapping validation is shown.

@@ -5,18 +5,11 @@ import i5.las2peer.execution.L2pServiceException;
 import i5.las2peer.p2p.AgentNotKnownException;
 import i5.las2peer.p2p.TimeoutException;
 import i5.las2peer.restMapper.HttpResponse;
-import i5.las2peer.restMapper.MediaType;
 import i5.las2peer.restMapper.RESTMapper;
 import i5.las2peer.restMapper.annotations.*;
-import i5.las2peer.security.AgentException;
 import i5.las2peer.security.L2pSecurityException;
-import i5.las2peer.security.Mediator;
-import i5.las2peer.security.UserAgent;
-import net.minidev.json.JSONObject;
 import net.minidev.json.JSONArray;
-import net.minidev.json.JSONStyle;
 
-import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
