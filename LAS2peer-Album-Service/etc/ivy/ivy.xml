@@ -5,7 +5,7 @@
 		<artifact type="jar" ext="jar" conf="default"/>
 	</publications>
     <dependencies>
-        <dependency org="i5" name="las2peer" rev="0.2-SNAPSHOT" />		 
+        <dependency org="i5" name="las2peer" rev="0.3-SNAPSHOT" />		 
         <dependency org="i5" name="las2peer-web-connector" rev="0.3-SNAPSHOT"/>
 		<dependency org="i5" name="i5.las2peer.services.fileService" rev="0.1"/>
 		<dependency org="net.minidev" name="json-smart" rev="2.0"/>			
