@@ -1,9 +1,11 @@
 /export
 /tmp
 /.las2peer
+/node-storage
 /startup
 /log
-/lib
+/lib/*
+!/lib/Filters.jar
 etc/ivy/ivy.jar
 /service
 /etc/startup
