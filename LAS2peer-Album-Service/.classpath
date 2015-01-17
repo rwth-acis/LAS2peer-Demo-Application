@@ -8,6 +8,18 @@
 	<classpathentry kind="lib" path="lib/json-smart-2.0.jar"/>
 	<classpathentry kind="lib" path="lib/las2peer-0.3-SNAPSHOT.jar"/>
 	<classpathentry kind="lib" path="lib/las2peer-web-connector-0.3-SNAPSHOT.jar"/>
-	<classpathentry kind="lib" path="lib/las2peer-rest-mapper-0.2-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="lib/las2peer-rest-mapper-0.3-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="lib/activation-1.1.jar"/>
+	<classpathentry kind="lib" path="lib/asm-1.0.jar"/>
+	<classpathentry kind="lib" path="lib/asm-3.3.1.jar"/>
+	<classpathentry kind="lib" path="lib/bcprov-jdk15on-1.50.jar"/>
+	<classpathentry kind="lib" path="lib/commons-codec-1.9.jar"/>
+	<classpathentry kind="lib" path="lib/commons-lang3-3.3.1.jar"/>
+	<classpathentry kind="lib" path="lib/i5.las2peer.services.fileService-0.1.jar"/>
+	<classpathentry kind="lib" path="lib/jcip-annotations-1.0.jar"/>
+	<classpathentry kind="lib" path="lib/lang-tag-1.4.jar"/>
+	<classpathentry kind="lib" path="lib/mail-1.4.7.jar"/>
+	<classpathentry kind="lib" path="lib/nimbus-jose-jwt-2.26.jar"/>
+	<classpathentry kind="lib" path="lib/oauth2-oidc-sdk-3.3.jar"/>
 	<classpathentry kind="output" path="tmp/classes"/>
 </classpath>
